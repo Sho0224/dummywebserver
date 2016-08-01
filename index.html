@@ -31,7 +31,7 @@
     </div>
 
     <script type="text/javascript">
-    var ioSocket = io.connect( "https://stark-shore-52884.herokuapp.com:3000" ); // チャットサーバーに接続
+    var ioSocket = io.connect( location.origin ); // チャットサーバーに接続
 
     // サーバーからのデータ受け取り処理
     ioSocket.on( "connect", function() {} ); // 接続
