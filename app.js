@@ -17,6 +17,6 @@ io.sockets.on( 'connection', function( socket ) {
     // クライアントからサーバーへ メッセージ送信ハンドラ（自分を含む全員宛に送る）
     socket.on( 'pointInput', function( data ) {
         // サーバーからクライアントへ メッセージを送り返し
-        io.sockets.emit( 'point', { x : data.x, y : data.y} );
+        io.sockets.emit( 'point', { x : data.x, y : data.y } );
     });
 });

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <style>
+    #messageForm {
+        margin-top: 15px;
+    }
+    </style>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://stark-shore-52884.herokuapp.com/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div id="messageView"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+    var ioSocket = io.connect( 'https://stark-shore-52884.herokuapp.com' ); // サーバーに接続
+
+    // サーバーからのデータ受け取り処理
+    ioSocket.on( "connect", function() {} ); // 接続
+    ioSocket.on( "disconnect", function() {} ); // 切断
+
+    // サーバーからクライアントへの送り返し
+    ioSocket.on( "point", function( data ) { appendMessage( data.x + "," + data.y) });
+
+    // 画面にメッセージを追記
+    function appendMessage( text ) {
+        $("#messageView").append( "<div>" + text + "</div>" );
+    }
+
+    </script>
+</body>
+</html>
