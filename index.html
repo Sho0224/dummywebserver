@@ -18,11 +18,11 @@
             <div class="col-md-6 col-md-offset-3">
                 <form>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="messageForm">
+                        <input type="text" class="form-control" id="inputX">
+                        <input type="text" class="form-control" id="inputY">
                     </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary" id="sendMessageBtn">自分を含む全員に送信</button>
-                        <button type="button" class="btn btn-primary" id="sendMessageBroadcastBtn">自分以外の全員に送信</button>
+                        <button type="button" class="btn btn-primary" id="sendBtn">座標を送信</button>
                     </div>
                 </form>
                 <div id="messageView"></div>
@@ -31,14 +31,14 @@
     </div>
 
     <script type="text/javascript">
-    var ioSocket = io.connect( location.origin ); // チャットサーバーに接続
+    var ioSocket = io.connect( location.origin ); // サーバーに接続
 
     // サーバーからのデータ受け取り処理
     ioSocket.on( "connect", function() {} ); // 接続
     ioSocket.on( "disconnect", function() {} ); // 切断
 
     // サーバーからクライアントへの送り返し
-    ioSocket.on( "s2c_message", function( data ) { appendMessage( data.value ) });
+    ioSocket.on( "point", function( data ) { appendMessage( data.x + "," + data.y) });
 
     // 画面にメッセージを追記
     function appendMessage( text ) {
@@ -46,25 +46,14 @@
     }
 
     // 自分を含む全員宛にメッセージを送信
-    $("#sendMessageBtn").click( function() {
+    $("#sendBtn").click( function() {
 
         // メッセージの内容を取得し、その後フォームをクリア
-        var message = $("#messageForm").val();
-        $("#messageForm").val("");
+        var inputX = $("#inputX").val();
+        var inputY = $("#inputY").val();
 
         // クライアントからサーバーへ送信
-        ioSocket.emit( "c2s_message", { value : message } );
-    });
-
-    // 自分以外の全員宛にメッセージを送信
-    $("#sendMessageBroadcastBtn").click( function() {
-
-        // メッセージの内容を取得し、その後フォームをクリア
-        var message = $("#messageForm").val();
-        $("#messageForm").val("");
-
-        // クライアントからサーバーへ送信
-        ioSocket.emit( "c2s_broadcast", { value : message } );
+        ioSocket.emit( "pointInput", { x : inputX, y : inputY } );
     });
     </script>
 </body>
